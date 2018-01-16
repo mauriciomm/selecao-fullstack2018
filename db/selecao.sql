@@ -120,6 +120,23 @@ CHARACTER SET utf8
 COLLATE utf8_general_ci
 COMMENT = 'AnimalVacina||Agenda de Vacinação';
 
+--
+-- Definition for table raça_animal
+--
+DROP TABLE IF EXISTS raca_animal;
+CREATE TABLE raca_animal (
+  ran_int_codigo INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código',
+  ran_var_nome VARCHAR(50) NOT NULL COMMENT 'Nome',
+  ran_dti_inclusao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Inclusão',
+  PRIMARY KEY (vac_int_codigo)
+)
+ENGINE = INNODB
+AUTO_INCREMENT = 1
+AVG_ROW_LENGTH = 5461
+CHARACTER SET utf8
+COLLATE utf8_general_ci
+COMMENT = 'Raça de Animal';
+
 DELIMITER $$
 
 --
