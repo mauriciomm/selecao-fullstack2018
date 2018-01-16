@@ -14,7 +14,20 @@ $htmlForm .= $form->addInput('text', 'ani_var_nome', 'Nome*', array('maxlength' 
 $htmlForm .= $form->addSelect('ani_cha_vivo', array('S' => 'Sim', 'N' => 'Não'), '', 'Vivo*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
 
 $htmlForm .= $form->addInput('text', 'ani_dec_peso', 'Peso*', array('maxlength' => '100', 'validate' => 'required'));
-$htmlForm .= $form->addInput('text', 'ani_var_raca', 'Raça*', array('maxlength' => '100', 'validate' => 'required'));
+// $htmlForm .= $form->addInput('text', 'ani_var_raca', 'Raça*', array('maxlength' => '100', 'validate' => 'required'));
+
+$array_raca_animal = [];
+
+try {
+    $query = "SELECT ran_var_nome, ran_var_nome FROM raca_animal order by ran_var_nome";
+    $mysql = new GDbMysql();
+    $array_raca_animal = $mysql->executeCombo($query);
+
+} catch (GDbException $exc) {
+    echo $exc->getError();
+}
+
+$htmlForm .= $form->addSelect('ani_var_raca', $array_raca_animal, '', 'Raça*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
 
 
 $htmlForm .= '<div class="form-actions">';
