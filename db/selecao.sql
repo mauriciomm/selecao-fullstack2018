@@ -790,7 +790,7 @@ CREATE OR REPLACE
   SQL SECURITY INVOKER
 VIEW vw_animal
 AS
-  select `animal`.`ani_int_codigo` AS `ani_int_codigo`,`animal`.`ani_var_nome` AS `ani_var_nome`,`animal`.`ani_dec_peso` AS `ani_dec_peso`, `raca_animal`.`ran_var_nome` AS `ran_var_nome`, `proprietario`.`pro_var_nome` AS `pro_var_nome`, `animal`.`ani_cha_vivo` AS `ani_cha_vivo`, (case `animal`.`ani_cha_vivo` when 'S' then 'Sim' when 'N' then 'Não' end) AS `ani_var_vivo`, `animal`.`ani_dti_inclusao` AS `ani_dti_inclusao`,date_format(`animal`.`ani_dti_inclusao`,'%d/%m/%Y %H:%i:%s') AS `ani_dtf_inclusao` from `animal` inner join `raca_animal` on `animal`.`ran_int_codigo` = `raca_animal`.`ran_int_codigo` inner join proprietario on `animal`.`pro_int_codigo` = `proprietario`.`pro_int_codigo`;
+  select `animal`.`ani_int_codigo` AS `ani_int_codigo`,`animal`.`ran_int_codigo` AS `ran_int_codigo`,`animal`.`pro_int_codigo` AS `pro_int_codigo`,`animal`.`ani_var_nome` AS `ani_var_nome`,`animal`.`ani_dec_peso` AS `ani_dec_peso`, `raca_animal`.`ran_var_nome` AS `ran_var_nome`, `proprietario`.`pro_var_nome` AS `pro_var_nome`, `animal`.`ani_cha_vivo` AS `ani_cha_vivo`, (case `animal`.`ani_cha_vivo` when 'S' then 'Sim' when 'N' then 'Não' end) AS `ani_var_vivo`, `animal`.`ani_dti_inclusao` AS `ani_dti_inclusao`,date_format(`animal`.`ani_dti_inclusao`,'%d/%m/%Y %H:%i:%s') AS `ani_dtf_inclusao` from `animal` inner join `raca_animal` on `animal`.`ran_int_codigo` = `raca_animal`.`ran_int_codigo` inner join proprietario on `animal`.`pro_int_codigo` = `proprietario`.`pro_int_codigo`;
 
 
 --
