@@ -22,6 +22,10 @@ $app->post('/animais', function (Request $request, Response $response) {
     $body = $request->getParsedBody();
 
     $animal = new Animal();
+
+    // Conversão de peso para padrão float: #####.###
+    $body['ani_dec_peso'] = str_replace(',', '.', str_replace('.', '',$body['ani_dec_peso']));
+
     $animal->setRan_int_codigo($body['ran_int_codigo']);
     $animal->setPro_int_codigo($body['pro_int_codigo']);
     $animal->setAni_var_nome($body['ani_var_nome']);
@@ -40,6 +44,9 @@ $app->put('/animais/{ani_int_codigo}', function (Request $request, Response $res
 	$ani_int_codigo = $request->getAttribute('ani_int_codigo');
     
     $animal = new Animal();
+
+    // Conversão de peso para padrão float: #####.###
+    $body['ani_dec_peso'] = str_replace(',', '.', str_replace('.', '',$body['ani_dec_peso']));
 
     $animal->setAni_int_codigo($ani_int_codigo);
     $animal->setRan_int_codigo($body['ran_int_codigo']);
