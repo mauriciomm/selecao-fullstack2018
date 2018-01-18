@@ -364,6 +364,12 @@ BEGIN
       SET p_msg = concat(p_msg, 'Status inválido.<br />');
     END IF;
   END IF;
+  IF p_ran_int_codigo IS NULL THEN
+    SET p_msg = concat(p_msg, 'Raça Animal não informada.<br />');
+  END IF;
+  IF p_pro_int_codigo IS NULL THEN
+    SET p_msg = concat(p_msg, 'Proprietário não informado.<br />');
+  END IF;
 
   IF p_msg = '' THEN
 
@@ -382,6 +388,79 @@ BEGIN
 
 END
 $$
+
+
+--
+-- Definition for procedure sp_animal_upd
+--
+DROP PROCEDURE IF EXISTS sp_animal_upd$$
+CREATE PROCEDURE sp_animal_upd(IN p_ani_int_codigo INT(11), IN p_ran_int_codigo INT(11), IN p_pro_int_codigo INT(11), IN p_ani_var_nome VARCHAR(50), IN p_ani_dec_peso DECIMAL(8,3), IN p_ani_cha_vivo CHAR(1), INOUT p_status BOOLEAN, INOUT p_msg TEXT)
+  SQL SECURITY INVOKER
+  COMMENT 'Procedure de Insert'
+BEGIN
+
+  DECLARE v_existe boolean;
+
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+    ROLLBACK;
+    SET p_status = FALSE;
+    SET p_msg = 'Erro ao executar o procedimento.';
+  END;
+
+  SET p_msg = '';
+  SET p_status = FALSE;
+  
+  
+  -- VALIDAÇÕES
+  SELECT IF(count(1) = 0, FALSE, TRUE)
+  INTO v_existe
+  FROM animal
+  WHERE ani_int_codigo = p_ani_int_codigo;
+  IF NOT v_existe THEN
+    SET p_msg = concat(p_msg, 'Registro não encontrado.<br />');
+  END IF;
+
+  -- VALIDAÇÕES
+  IF p_ani_var_nome IS NULL THEN
+    SET p_msg = concat(p_msg, 'Nome não informado.<br />');
+  END IF;
+  IF p_ani_cha_vivo IS NULL THEN
+    SET p_msg = concat(p_msg, 'Status não informado.<br />');
+  ELSE
+    IF p_ani_cha_vivo NOT IN ('S','N') THEN
+      SET p_msg = concat(p_msg, 'Status inválido.<br />');
+    END IF;
+  END IF;
+  IF p_ran_int_codigo IS NULL THEN
+    SET p_msg = concat(p_msg, 'Raça Animal não informada.<br />');
+  END IF;
+  IF p_pro_int_codigo IS NULL THEN
+    SET p_msg = concat(p_msg, 'Proprietário não informado.<br />');
+  END IF;
+
+  IF p_msg = '' THEN
+
+    START TRANSACTION;
+
+    UPDATE animal
+    SET ran_int_codigo = p_ran_int_codigo,
+        pro_int_codigo = p_pro_int_codigo,
+        ani_var_nome = p_ani_var_nome,
+        ani_dec_peso = p_ani_dec_peso,
+        ani_cha_vivo = p_ani_cha_vivo
+    WHERE ani_int_codigo = p_ani_int_codigo;
+
+    COMMIT;
+
+    SET p_status = TRUE;
+    SET p_msg = 'Um novo registro foi inserido com sucesso.';
+
+  END IF;
+
+END
+$$
+
 
 --
 -- Definition for procedure sp_usuario_del
@@ -582,11 +661,8 @@ BEGIN
 END
 $$
 
----------------------------------------------------------------------
-
--- PROCEDURES DE PROPRIETÁRIO
-
 --
+-- PROCEDURES DE PROPRIETÁRIO
 -- Definition for procedure sp_proprietario_del
 --
 DROP PROCEDURE IF EXISTS sp_proprietario_del$$
