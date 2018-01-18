@@ -14,21 +14,26 @@ $htmlForm .= $form->addInput('text', 'ani_var_nome', 'Nome*', array('maxlength' 
 $htmlForm .= $form->addSelect('ani_cha_vivo', array('S' => 'Sim', 'N' => 'Não'), '', 'Vivo*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
 
 $htmlForm .= $form->addInput('text', 'ani_dec_peso', 'Peso*', array('maxlength' => '100', 'validate' => 'required'));
-// $htmlForm .= $form->addInput('text', 'ani_var_raca', 'Raça*', array('maxlength' => '100', 'validate' => 'required'));
 
 $array_raca_animal = [];
+$array_proprietario = [];
 
 try {
-    $query = "SELECT ran_int_codigo, ran_var_nome FROM raca_animal order by ran_var_nome";
     $mysql = new GDbMysql();
+    
+    $query = "SELECT ran_int_codigo, ran_var_nome FROM raca_animal order by ran_var_nome";
     $array_raca_animal = $mysql->executeCombo($query);
+
+    $query = "SELECT pro_int_codigo, pro_var_nome FROM proprietario order by pro_var_nome";
+    $array_proprietario = $mysql->executeCombo($query);
+
 
 } catch (GDbException $exc) {
     echo $exc->getError();
 }
 
 $htmlForm .= $form->addSelect('ran_int_codigo', $array_raca_animal, '', 'Raça*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
-
+$htmlForm .= $form->addSelect('pro_int_codigo', $array_proprietario, '', 'Proprietário*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
 
 $htmlForm .= '<div class="form-actions">';
 $htmlForm .= getBotoesAcao(true);
