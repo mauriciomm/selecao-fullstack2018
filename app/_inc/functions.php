@@ -66,6 +66,11 @@ function getBotaoAdicionar($id = 'p__btn_adicionar') {
     return $form->addButton($id, '<i class="fa fa-plus"></i> <span class="hidden-phone">Adicionar</span>', array('class' => 'btn sepH_a sepV_a blue-steel pull-left'));
 }
 
+function getBotaoAplicarVacina($id = 'p__btn_adicionar') {
+    $form = new GForm();
+    return $form->addButton($id, '<i class="fa fa-medkit"></i> <span class="hidden-phone">Aplicar Vacina</span>', array('class' => 'btn sepH_a sepV_a blue-steel pull-left'));
+}
+
 
 function validaCPF($cpf) {
     // Verifiva se o número digitado contém todos os digitos
