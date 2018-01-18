@@ -8,7 +8,7 @@ class AnimalDao {
         $ret = array();
         try {
             $mysql = new GDbMysql();
-            $mysql->execute("SELECT ani_int_codigo,ani_var_nome,ani_cha_vivo,ani_dec_peso,ran_int_codigo FROM vw_animal WHERE ani_int_codigo = ? ", array("i", $animal->getAni_int_codigo()), true, MYSQL_ASSOC);
+            $mysql->execute("SELECT ani_int_codigo,ani_var_nome,ani_cha_vivo,ani_dec_peso,ran_int_codigo FROM vw_animal WHERE ani_int_codigo = ? ", array("i", $animal->getAni_int_codigo()), true, 'MYSQL_ASSOC');
             if ($mysql->fetch()) {
                 $ret = $mysql->res;
             }

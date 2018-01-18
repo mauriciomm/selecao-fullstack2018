@@ -8,7 +8,7 @@ class ProprietarioDao {
         $ret = array();
         try {
             $mysql = new GDbMysql();
-            $mysql->execute("SELECT pro_var_nome,pro_var_email,pro_var_telefone FROM vw_proprietario WHERE pro_int_codigo = ? ", array("i", $proprietario->getPro_int_codigo()), true, MYSQL_ASSOC);
+            $mysql->execute("SELECT pro_int_codigo, pro_var_nome,pro_var_email,pro_var_telefone FROM vw_proprietario WHERE pro_int_codigo = ? ", array("i", $proprietario->getPro_int_codigo()), true, 'MYSQL_ASSOC');
             if ($mysql->fetch()) {
                 $ret = $mysql->res;
             }
