@@ -19,7 +19,7 @@ $htmlForm .= $form->addInput('text', 'ani_dec_peso', 'Peso*', array('maxlength' 
 $array_raca_animal = [];
 
 try {
-    $query = "SELECT ran_var_nome, ran_var_nome FROM raca_animal order by ran_var_nome";
+    $query = "SELECT ran_int_codigo, ran_var_nome FROM raca_animal order by ran_var_nome";
     $mysql = new GDbMysql();
     $array_raca_animal = $mysql->executeCombo($query);
 
@@ -27,7 +27,7 @@ try {
     echo $exc->getError();
 }
 
-$htmlForm .= $form->addSelect('ani_var_raca', $array_raca_animal, '', 'Raça*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
+$htmlForm .= $form->addSelect('ran_int_codigo', $array_raca_animal, '', 'Raça*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
 
 
 $htmlForm .= '<div class="form-actions">';

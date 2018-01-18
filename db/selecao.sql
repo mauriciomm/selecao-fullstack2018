@@ -40,10 +40,10 @@ USE selecao_fullstack;
 DROP TABLE IF EXISTS animal;
 CREATE TABLE animal (
   ani_int_codigo INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código',
+  ran_int_codigo INT(11) UNSIGNED NULL COMMENT 'Raça',
   ani_var_nome VARCHAR(50) NOT NULL COMMENT 'Nome',
   ani_cha_vivo CHAR(1) NOT NULL DEFAULT 'S' COMMENT 'Vivo|S:Sim;N:Não',
   ani_dec_peso DECIMAL(8, 3) DEFAULT NULL COMMENT 'Peso',
-  ani_var_raca VARCHAR(50) DEFAULT NULL COMMENT 'Raça',
   ani_dti_inclusao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Inclusão',
   PRIMARY KEY (ani_int_codigo)
 )
@@ -331,7 +331,7 @@ $$
 -- Definition for procedure sp_animal_ins
 --
 DROP PROCEDURE IF EXISTS sp_animal_ins$$
-CREATE PROCEDURE sp_animal_ins(IN p_ani_var_nome VARCHAR(50), IN p_ani_dec_peso DECIMAL(8,3), IN p_ani_var_raca VARCHAR(50), IN p_ani_cha_vivo CHAR(1), INOUT p_status BOOLEAN, INOUT p_msg TEXT, INOUT p_insert_id INT(11))
+CREATE PROCEDURE sp_animal_ins(IN p_ani_var_nome VARCHAR(50), IN p_ani_dec_peso DECIMAL(8,3), IN p_ran_int_codigo INT(11), IN p_ani_cha_vivo CHAR(1), INOUT p_status BOOLEAN, INOUT p_msg TEXT, INOUT p_insert_id INT(11))
   SQL SECURITY INVOKER
   COMMENT 'Procedure de Insert'
 BEGIN
@@ -364,8 +364,8 @@ BEGIN
 
     START TRANSACTION;
 
-    INSERT INTO animal (ani_var_nome, ani_dec_peso, ani_var_raca, ani_cha_vivo)
-    VALUES (p_ani_var_nome, p_ani_dec_peso, p_ani_var_raca, p_ani_cha_vivo);
+    INSERT INTO animal (ani_var_nome, ani_dec_peso, ran_int_codigo, ani_cha_vivo)
+    VALUES (p_ani_var_nome, p_ani_dec_peso, p_ran_int_codigo, p_ani_cha_vivo);
 
     COMMIT;
 
@@ -785,7 +785,7 @@ CREATE OR REPLACE
   SQL SECURITY INVOKER
 VIEW vw_animal
 AS
-  select `animal`.`ani_int_codigo` AS `ani_int_codigo`,`animal`.`ani_var_nome` AS `ani_var_nome`,`animal`.`ani_dec_peso` AS `ani_dec_peso`,`animal`.`ani_var_raca` AS `ani_var_raca`,`animal`.`ani_cha_vivo` AS `ani_cha_vivo`,(case `animal`.`ani_cha_vivo` when 'S' then 'Sim' when 'N' then 'Não' end) AS `ani_var_vivo`,`animal`.`ani_dti_inclusao` AS `ani_dti_inclusao`,date_format(`animal`.`ani_dti_inclusao`,'%d/%m/%Y %H:%i:%s') AS `ani_dtf_inclusao` from `animal`;
+  select `animal`.`ani_int_codigo` AS `ani_int_codigo`,`animal`.`ani_var_nome` AS `ani_var_nome`,`animal`.`ani_dec_peso` AS `ani_dec_peso`, `raca_animal`.`ran_var_nome` AS `ran_var_nome`, `animal`.`ani_cha_vivo` AS `ani_cha_vivo`, (case `animal`.`ani_cha_vivo` when 'S' then 'Sim' when 'N' then 'Não' end) AS `ani_var_vivo`, `animal`.`ani_dti_inclusao` AS `ani_dti_inclusao`,date_format(`animal`.`ani_dti_inclusao`,'%d/%m/%Y %H:%i:%s') AS `ani_dtf_inclusao` from `animal` inner join `raca_animal` on `animal`.`ran_int_codigo` = `raca_animal`.`ran_int_codigo`;
 
 
 --
