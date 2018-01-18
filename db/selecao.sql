@@ -901,6 +901,17 @@ AS
   select `proprietario`.`pro_int_codigo` AS `pro_int_codigo`,`proprietario`.`pro_var_nome` AS `pro_var_nome`,`proprietario`.`pro_var_email` AS `pro_var_email`,`proprietario`.`pro_var_telefone` AS `pro_var_telefone`,`proprietario`.`pro_dti_inclusao` AS `pro_dti_inclusao`,date_format(`proprietario`.`pro_dti_inclusao`,'%d/%m/%Y %H:%i:%s') AS `pro_dtf_inclusao` from `proprietario`;
 
 
+--
+-- Definition for view vw_animal
+--
+DROP VIEW IF EXISTS vw_animal_vacina CASCADE;
+CREATE OR REPLACE
+  SQL SECURITY INVOKER
+VIEW vw_animal_vacina
+AS
+  select `animal_vacina`.`anv_int_codigo` AS `anv_int_codigo`,`animal_vacina`.`ani_int_codigo` AS `ani_int_codigo`,`animal`.`ani_var_nome` AS `ani_var_nome`,`animal_vacina`.`vac_int_codigo` AS `vac_int_codigo`,`vacina`.`vac_var_nome` AS `vac_var_nome`,`animal_vacina`.`anv_dat_programacao` AS `anv_dat_programacao`,date_format(`animal_vacina`.`anv_dat_programacao`,'%d/%m/%Y') AS `anv_dtf_programacao`,`animal_vacina`.`anv_dti_aplicacao` AS `anv_dti_aplicacao`,date_format(`animal_vacina`.`anv_dti_aplicacao`,'%d/%m/%Y  %H:%i:%s') AS `anv_dtf_aplicacao`,  
+  `animal_vacina`.`usu_int_codigo` AS `usu_int_codigo`,`usuario`.`usu_var_nome` AS `usu_var_nome` from `animal_vacina` inner join `animal` on `animal_vacina`.`ani_int_codigo` = `animal`.`ani_int_codigo` inner join `vacina` on `animal_vacina`.`vac_int_codigo` = `vacina`.`vac_int_codigo` inner join `usuario` on `animal_vacina`.`usu_int_codigo` = `usuario`.`usu_int_codigo`;
+
 
 --
 -- Dumping data for table usuario
