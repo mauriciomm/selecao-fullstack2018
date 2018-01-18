@@ -68,12 +68,11 @@ $footer->show();
         });
         $(document).on('click', '.l__btn_editar, tr.linhaRegistro td:not([class~="acoes"])', function() {
             var pro_int_codigo = $(this).parents('tr.linhaRegistro').attr('id');
-
+            
             scrollTop();
             selectLine(pro_int_codigo);
 
             loadForm(URL_API + 'proprietarios/' + pro_int_codigo, function(json) {
-                // $('#ani_dec_peso').val(numberFormat(json.ani_dec_peso,3));
                 showForm('divForm', 'upd', 'Editar');
             });
         });
