@@ -8,7 +8,7 @@ class AnimalDao {
         $ret = array();
         try {
             $mysql = new GDbMysql();
-            $mysql->execute("SELECT ani_int_codigo,ani_var_nome,ani_cha_vivo,ani_dec_peso,ran_int_codigo FROM vw_animal WHERE ani_int_codigo = ? ", array("i", $animal->getAni_int_codigo()), true, 'MYSQL_ASSOC');
+            $mysql->execute("SELECT ani_int_codigo,ani_var_nome,ani_cha_vivo,ani_dec_peso,ran_int_codigo,pro_int_codigo FROM vw_animal WHERE ani_int_codigo = ? ", array("i", $animal->getAni_int_codigo()), true, 'MYSQL_ASSOC');
             if ($mysql->fetch()) {
                 $ret = $mysql->res;
             }
@@ -23,15 +23,16 @@ class AnimalDao {
     public function insert($animal) {
 
         $return = array();
-        $param = array("sdis",
+        $param = array("iisds",
+            $animal->getRan_int_codigo(),
+            $animal->getPro_int_codigo(),
             $animal->getAni_var_nome(),
             $animal->getAni_dec_peso(),
-            $animal->getRan_int_codigo(),
             $animal->getAni_cha_vivo()           
             );
         try{
             $mysql = new GDbMysql();
-            $mysql->execute("CALL sp_animal_ins(?,?,?,?, @p_status, @p_msg, @p_insert_id);", $param, false);
+            $mysql->execute("CALL sp_animal_ins(?,?,?,?,?, @p_status, @p_msg, @p_insert_id);", $param, false);
             $mysql->execute("SELECT @p_status, @p_msg, @p_insert_id");
             $mysql->fetch();
             $return["status"] = ($mysql->res[0]) ? true : false;
@@ -49,15 +50,16 @@ class AnimalDao {
     public function update($animal) {
 
         $return = array();
-        $param = array("isdis",
+        $param = array("iiisds",
             $animal->getAni_int_codigo(),
+            $animal->getRan_int_codigo(),
+            $animal->getPro_int_codigo(),
             $animal->getAni_var_nome(),
             $animal->getAni_dec_peso(),
-            $animal->getRan_int_codigo(),
             $animal->getAni_cha_vivo());
         try{
             $mysql = new GDbMysql();
-            $mysql->execute("CALL sp_animal_upd(?,?,?,?,?, @p_status, @p_msg);", $param, false);
+            $mysql->execute("CALL sp_animal_upd(?,?,?,?,?,?, @p_status, @p_msg);", $param, false);
             $mysql->execute("SELECT @p_status, @p_msg");
             $mysql->fetch();
             $return["status"] = ($mysql->res[0]) ? true : false;

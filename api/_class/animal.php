@@ -46,5 +46,13 @@ class Animal{
 	public function setRan_int_codigo($ran_int_codigo) {
 		$this->ran_int_codigo = $ran_int_codigo;
 	}
+	
+	public function getPro_int_codigo() {
+		return $this->pro_int_codigo;
+	}
+
+	public function setPro_int_codigo($pro_int_codigo) {
+		$this->pro_int_codigo = $pro_int_codigo;
+	}
 
 }

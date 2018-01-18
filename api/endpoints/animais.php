@@ -22,10 +22,11 @@ $app->post('/animais', function (Request $request, Response $response) {
     $body = $request->getParsedBody();
 
     $animal = new Animal();
+    $animal->setRan_int_codigo($body['ran_int_codigo']);
+    $animal->setPro_int_codigo($body['pro_int_codigo']);
     $animal->setAni_var_nome($body['ani_var_nome']);
  	$animal->setAni_cha_vivo($body['ani_cha_vivo']);
  	$animal->setAni_dec_peso($body['ani_dec_peso']);
- 	$animal->setRan_int_codigo($body['ran_int_codigo']);
 
     $data = AnimalDao::insert($animal);
     $code = ($data['status']) ? 201 : 500;
@@ -41,10 +42,11 @@ $app->put('/animais/{ani_int_codigo}', function (Request $request, Response $res
     $animal = new Animal();
 
     $animal->setAni_int_codigo($ani_int_codigo);
+    $animal->setRan_int_codigo($body['ran_int_codigo']);
+    $animal->setPro_int_codigo($body['pro_int_codigo']);
     $animal->setAni_var_nome($body['ani_var_nome']);
  	$animal->setAni_cha_vivo($body['ani_cha_vivo']);
  	$animal->setAni_dec_peso($body['ani_dec_peso']);
- 	$animal->setRan_int_codigo($body['ran_int_codigo']);
 
     $data = AnimalDao::update($animal);
     $code = ($data['status']) ? 200 : 500;
