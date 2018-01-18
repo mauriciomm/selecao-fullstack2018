@@ -8,7 +8,7 @@ class AnimalDao {
         $ret = array();
         try {
             $mysql = new GDbMysql();
-            $mysql->execute("SELECT ani_int_codigo,ani_var_nome,ani_cha_vivo,ani_dec_peso,ani_var_raca FROM vw_animal WHERE ani_int_codigo = ? ", array("i", $animal->getAni_int_codigo()), true, MYSQL_ASSOC);
+            $mysql->execute("SELECT ani_int_codigo,ani_var_nome,ani_cha_vivo,ani_dec_peso,ran_int_codigo FROM vw_animal WHERE ani_int_codigo = ? ", array("i", $animal->getAni_int_codigo()), true, MYSQL_ASSOC);
             if ($mysql->fetch()) {
                 $ret = $mysql->res;
             }
@@ -23,10 +23,10 @@ class AnimalDao {
     public function insert($animal) {
 
         $return = array();
-        $param = array("sdss",
+        $param = array("sdis",
             $animal->getAni_var_nome(),
             $animal->getAni_dec_peso(),
-            $animal->getAni_var_raca(),
+            $animal->getRan_int_codigo(),
             $animal->getAni_cha_vivo()           
             );
         try{
@@ -49,11 +49,11 @@ class AnimalDao {
     public function update($animal) {
 
         $return = array();
-        $param = array("isdss",
+        $param = array("isdis",
             $animal->getAni_int_codigo(),
             $animal->getAni_var_nome(),
             $animal->getAni_dec_peso(),
-            $animal->getAni_var_raca(),
+            $animal->getRan_int_codigo(),
             $animal->getAni_cha_vivo());
         try{
             $mysql = new GDbMysql();
