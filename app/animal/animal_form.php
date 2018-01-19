@@ -25,7 +25,7 @@ try {
     $query = "SELECT ran_int_codigo, ran_var_nome FROM raca_animal order by ran_var_nome";
     $array_raca_animal = $mysql->executeCombo($query);
 
-    $query = "SELECT pro_int_codigo, pro_var_nome FROM proprietario order by pro_var_nome";
+    $query = "SELECT pro_int_codigo, pro_var_nome FROM vw_proprietario order by pro_var_nome";
     $array_proprietario = $mysql->executeCombo($query);
 
 

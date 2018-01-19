@@ -25,10 +25,10 @@ class AnimalVacinaDao {
     public function insert($animalVacina) {
 
         $return = array();
-        $param = array("iissi",$animalVacina->getAnimal()->getAni_int_codigo(),$animalVacina->getVacina()->getVac_int_codigo(),$animalVacina->getAnv_dat_programacao(),$animalVacina->getAnv_dti_aplicacao(),$animalVacina->getUsuario()->getUsu_int_codigo());
+        $param = array("iis",$animalVacina->getAnimal()->getAni_int_codigo(),$animalVacina->getVacina()->getVac_int_codigo(),$animalVacina->getAnv_dat_programacao());
         try{
             $mysql = new GDbMysql();
-            $mysql->execute("CALL sp_animal_vacina_ins(?,?,?,?,?, @p_status, @p_msg, @p_insert_id);", $param, false);
+            $mysql->execute("CALL sp_animalvacina_ins(?,?,?, @p_status, @p_msg, @p_insert_id);", $param, false);
             $mysql->execute("SELECT @p_status, @p_msg, @p_insert_id");
             $mysql->fetch();
             $return["status"] = ($mysql->res[0]) ? true : false;
@@ -46,10 +46,30 @@ class AnimalVacinaDao {
     public function update($animalVacina) {
 
         $return = array();
-        $param = array("iiissi",$animalVacina->getAnv_int_codigo(),$animalVacina->getAnimal()->getAni_int_codigo(),$animalVacina->getVacina()->getVac_int_codigo(),$animalVacina->getAnv_dat_programacao(),$animalVacina->getAnv_dti_aplicacao(),$animalVacina->getUsuario()->getUsu_int_codigo());
+        $param = array("iiis",$animalVacina->getAnv_int_codigo(),$animalVacina->getAnimal()->getAni_int_codigo(),$animalVacina->getVacina()->getVac_int_codigo(),$animalVacina->getAnv_dat_programacao());
         try{
             $mysql = new GDbMysql();
-            $mysql->execute("CALL sp_animal_vacina_upd(?,?,?,?,?,?, @p_status, @p_msg);", $param, false);
+            $mysql->execute("CALL sp_animalvacina_upd(?,?,?,?, @p_status, @p_msg);", $param, false);
+            $mysql->execute("SELECT @p_status, @p_msg");
+            $mysql->fetch();
+            $return["status"] = ($mysql->res[0]) ? true : false;
+            $return["msg"] = $mysql->res[1];
+            $mysql->close();
+        } catch (GDbException $e) {
+            $return["status"] = false;
+            $return["msg"] = $e->getError();
+        }
+        return $return;
+    }
+
+    /** @param AnimalVacina $animalVacina */
+    public function vacinar($animalVacina) {
+
+        $return = array();
+        $param = array("iiis",$animalVacina->getAnv_int_codigo(),$animalVacina->getAnimal()->getAni_int_codigo(),$animalVacina->getUsuario()->getUsu_int_codigo(), 'S');
+        try{
+            $mysql = new GDbMysql();
+            $mysql->execute("CALL sp_animalvacina_aplica(?,?,?,?, @p_status, @p_msg);", $param, false);
             $mysql->execute("SELECT @p_status, @p_msg");
             $mysql->fetch();
             $return["status"] = ($mysql->res[0]) ? true : false;
@@ -69,7 +89,7 @@ class AnimalVacinaDao {
         $param = array("i",$animalVacina->getAnv_int_codigo());
         try {
             $mysql = new GDbMysql();
-            $mysql->execute("CALL sp_animal_vacina_del(?, @p_status, @p_msg);", $param, false);
+            $mysql->execute("CALL sp_animalvacina_del(?, @p_status, @p_msg);", $param, false);
             $mysql->execute("SELECT @p_status, @p_msg");
             $mysql->fetch();
             $return["status"] = ($mysql->res[0]) ? true : false;
