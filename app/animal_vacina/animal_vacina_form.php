@@ -32,12 +32,12 @@ try {
     echo $exc->getError();
 }
 
-$htmlForm .= $form->addSelect('ani_int_codigo', $array_animal, '', 'Animal*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
-$htmlForm .= $form->addSelect('vac_int_codigo', $array_vacina, '', 'Vacina*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
+$htmlForm .= $form->addSelect('ani_int_codigo', $array_animal, '', 'Animal*', array(), false, false, true, '', 'Selecione...');
+$htmlForm .= $form->addSelect('vac_int_codigo', $array_vacina, '', 'Vacina*', array(), false, false, true, '', 'Selecione...');
 
-$htmlForm .= $form->addInput('date', 'anv_dat_programacao', 'Data de Programação*', array('maxlength' => '10', 'validate' => 'required'));
+$htmlForm .= $form->addInput('date', 'anv_dat_programacao', 'Data de Programação*', array('maxlength' => '10'));
 
-$htmlForm .= $form->addSelect('usu_int_codigo', $array_usuario, '', 'Usuário*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
+$htmlForm .= $form->addSelect('usu_int_codigo', $array_usuario, '', 'Usuário*', array(), false, false, true, '', 'Selecione...');
 
 $htmlForm .= '<div class="form-actions">';
 $htmlForm .= getBotoesAcao(true);
@@ -50,14 +50,23 @@ echo $htmlForm;
 ?>
 <script>
     $(function() {
-        // $('#pro_dec_peso').maskMoney({thousands:'.', decimal:',', precision:3,  affixesStay: false});
 
         $('#form').submit(function() {
             var anv_int_codigo = $('#anv_int_codigo').val();
             $('#p__selecionado').val();
             if ($('#form').gValidate()) {
                 var method = ($('#acao').val() == 'ins') ? 'POST' : 'PUT';
-                var endpoint = ($('#acao').val() == 'ins') ? URL_API + 'animais_vacinas' : URL_API + 'animais_vacinas/' + anv_int_codigo;
+                
+                var usu_int_codigo = $('#usu_int_codigo_text').val();
+                console.log(usu_int_codigo);
+                if ($('#acao').val() == 'ins') {
+                    var endpoint = URL_API + 'animais_vacinas';
+                }
+                else {
+                    var endpoint = URL_API + 'animais_vacinas/' + anv_int_codigo;
+                    if (usu_int_codigo) endpoint += '/vacinar'
+                }
+                console.log(endpoint);
                 $.gAjax.exec(method, endpoint, $('#form').serializeArray(), false, function(json) {
                     if (json.status) {
                         showList(true);

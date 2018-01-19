@@ -65,8 +65,11 @@ try {
                 $html .= '<td>' . $mysql->res['usu_var_nome'] . '</td>';
 
                 //<editor-fold desc="Actions">
-                    $html .= '<td class="__acenter hidden-phone acoes">';
-                    $html .= $form->addButton('l__btn_editar', '<i class="fa fa-pencil"></i>', array('class' => 'btn btn-small btn-icon-only l__btn_editar', 'title' => 'Edit'));
+                    $html .= '<td class="__acenter hidden-phone acoes" style="width:140px;">';
+                    if ($mysql->res['usu_var_nome'] == null) {
+                        $html .= $form->addButton('l__btn_vacinar', '<i class="fa fa-medkit"></i>', array('class' => 'btn btn-small btn-icon-only green l__btn_vacinar', 'title' => 'Vacinar'));
+                        $html .= $form->addButton('l__btn_editar', '<i class="fa fa-pencil"></i>', array('class' => 'btn btn-small btn-icon-only l__btn_editar', 'title' => 'Editar'));
+                    }
                     $html .= $form->addButton('l__btn_excluir', '<i class="fa fa-trash"></i>', array('class' => 'btn btn-small btn-icon-only l__btn_excluir', 'title' => 'Remove'));
                     $html .= '</td>';
                 //</editor-fold>

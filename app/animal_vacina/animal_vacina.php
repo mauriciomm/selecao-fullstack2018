@@ -3,7 +3,7 @@ require_once '../_inc/global.php';
 
 $form = new GForm();
 
-$header = new GHeader('Histórico de Vacinações');
+$header = new GHeader('Vacinações');
 $header->addLib(array('paginate', 'maskMoney'));
 $header->show(false, 'aplicar_vacina/aplicar_vacina.php');
 // ---------------------------------- Header ---------------------------------//
@@ -16,7 +16,7 @@ $html .= $form->open('filter', 'form-inline filterForm');
 $html .= $form->addInput('text', 'p__ani_var_nome', false, array('placeholder' => 'Nome do Animal', 'class' => 'sepV_b m-wrap small'), false, false, false);
 
 $html .= getBotoesFiltro();
-$html .= getBotaoAplicarVacina();
+$html .= getBotaoAdicionarProgramacaoVacina();
 $html .= $form->close();
 //</editor-fold>
 
@@ -45,6 +45,15 @@ $footer->show();
     }
 
     $(function() {
+        var ani_int_codigo = $('#ani_int_codigo');
+        var lbl_ani_int_codigo = $('#lbl_ani_int_codigo');
+        var vac_int_codigo = $('#vac_int_codigo');
+        var lbl_vac_int_codigo = $('#lbl_vac_int_codigo');
+        var anv_dat_programacao = $('#anv_dat_programacao');
+        var lbl_anv_dat_programacao = $('#lbl_anv_dat_programacao');
+        var usu_int_codigo = $('#usu_int_codigo');
+        var lbl_usu_int_codigo = $('#lbl_usu_int_codigo');
+        
         filtrar(1);
         $('#filter select').change(function() {
             filtrar(1);
@@ -60,22 +69,74 @@ $footer->show();
             clearForm('#filter');
             filtrar(1);
         });
+
+        function configFormAdicionar() {
+            ani_int_codigo.show();
+            ani_int_codigo.attr('validate', 'required');
+            lbl_ani_int_codigo.show();
+            vac_int_codigo.show();            
+            vac_int_codigo.attr('validate', 'required');
+            lbl_vac_int_codigo.show();            
+            anv_dat_programacao.show();
+            anv_dat_programacao.attr('validate', 'required');
+            lbl_anv_dat_programacao.show();
+            
+            usu_int_codigo.hide();
+            usu_int_codigo.removeAttr('validate');
+            lbl_usu_int_codigo.hide();
+        }
+
+        function configFormVacinar() {
+            ani_int_codigo.hide();
+            ani_int_codigo.removeAttr('validate');
+            lbl_ani_int_codigo.hide();
+            vac_int_codigo.hide();      
+            vac_int_codigo.removeAttr('validate');      
+            lbl_vac_int_codigo.hide();            
+            anv_dat_programacao.hide();
+            anv_dat_programacao.removeAttr('validate');
+            lbl_anv_dat_programacao.hide();
+
+            usu_int_codigo.show();
+            usu_int_codigo.attr('validate', 'required');
+            lbl_usu_int_codigo.show();
+        }
+        
         $(document).on('click', '#p__btn_adicionar', function() {
             scrollTop();
             unselectLines();
 
             showForm('divForm', 'ins', 'Adicionar');
+            configFormAdicionar();
         });
-        $(document).on('click', '.l__btn_editar, tr.linhaRegistro td:not([class~="acoes"])', function() {
+
+        $(document).on('click', '.l__btn_editar', function() {            
+            var anv_int_codigo = $(this).parents('tr.linhaRegistro').attr('id');
+            
+            scrollTop();
+            selectLine(anv_int_codigo);
+            
+            loadForm(URL_API + 'animais_vacinas/' + anv_int_codigo, function(json) {
+                showForm('divForm', 'upd', 'Editar');
+            });
+            configFormAdicionar();
+        });
+
+        $(document).on('click', '.l__btn_vacinar', function() {
+            
+            // configFormVacinar();
+
             var anv_int_codigo = $(this).parents('tr.linhaRegistro').attr('id');
             
             scrollTop();
             selectLine(anv_int_codigo);
 
             loadForm(URL_API + 'animais_vacinas/' + anv_int_codigo, function(json) {
-                showForm('divForm', 'upd', 'Editar');
+                showForm('divForm', 'upd', 'Vacinar');
             });
+            configFormVacinar();
         });
+
         $(document).on('click', '.l__btn_excluir', function() {
             var anv_int_codigo = $(this).parents('tr.linhaRegistro').attr('id');
 
