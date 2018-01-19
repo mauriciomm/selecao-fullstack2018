@@ -227,6 +227,118 @@ BEGIN
 END
 $$
 
+
+--
+-- Definition for procedure sp_animalvacina_ins
+--
+DROP PROCEDURE IF EXISTS sp_animalvacina_ins$$
+CREATE PROCEDURE sp_animalvacina_ins(IN p_ani_int_codigo INT(11), IN p_vac_int_codigo INT(11), IN p_anv_dat_programacao DATE, INOUT p_status BOOLEAN, INOUT p_msg TEXT, INOUT p_insert_id INT(11))
+  SQL SECURITY INVOKER
+  COMMENT 'Procedure de Insert'
+BEGIN
+
+  DECLARE v_existe boolean;
+
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+    ROLLBACK;
+    SET p_status = FALSE;
+    SET p_msg = 'Erro ao executar o procedimento.';
+  END;
+
+  SET p_msg = '';
+  SET p_status = FALSE;
+
+  -- VALIDAÇÕES
+  IF p_ani_int_codigo IS NULL THEN
+    SET p_msg = concat(p_msg, 'Animal não informado.<br />');
+  END IF;
+  IF p_vac_int_codigo IS NULL THEN
+    SET p_msg = concat(p_msg, 'Vacina não informada.<br />');
+  END IF;
+  IF p_anv_dat_programacao IS NULL THEN
+    SET p_msg = concat(p_msg, 'Data não informada.<br />');
+  END IF;
+
+  IF p_msg = '' THEN
+
+    START TRANSACTION;
+
+    INSERT INTO animal_vacina (ani_int_codigo, vac_int_codigo, anv_dat_programacao)
+    VALUES (p_ani_int_codigo, p_vac_int_codigo, p_anv_dat_programacao);
+
+    COMMIT;
+
+    SET p_status = TRUE;
+    SET p_msg = 'Um novo registro foi inserido com sucesso.';
+    SET p_insert_id = LAST_INSERT_ID();
+
+  END IF;
+
+END
+$$
+
+--
+-- Definition for procedure sp_animalvacina_upd
+--
+DROP PROCEDURE IF EXISTS sp_animalvacina_upd$$
+CREATE PROCEDURE sp_animalvacina_upd(IN p_anv_int_codigo INT(11),IN p_ani_int_codigo INT(11), IN p_vac_int_codigo INT(11), IN p_anv_dat_programacao DATE, INOUT p_status BOOLEAN, INOUT p_msg TEXT)
+  SQL SECURITY INVOKER
+  COMMENT 'Procedure de Update'
+BEGIN
+
+  DECLARE v_existe boolean;
+
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+    ROLLBACK;
+    SET p_status = FALSE;
+    SET p_msg = 'Erro ao executar o procedimento.';
+  END;
+
+  SET p_msg = '';
+  SET p_status = FALSE;
+
+   -- VALIDAÇÕES
+  SELECT IF(count(1) = 0, FALSE, TRUE)
+  INTO v_existe
+  FROM animal_vacina
+  WHERE anv_int_codigo = p_anv_int_codigo;
+  IF NOT v_existe THEN
+    SET p_msg = concat(p_msg, 'Registro não encontrado.<br />');
+  END IF;
+
+  -- VALIDAÇÕES
+  IF p_ani_int_codigo IS NULL THEN
+    SET p_msg = concat(p_msg, 'Animal não informado.<br />');
+  END IF;
+  IF p_vac_int_codigo IS NULL THEN
+    SET p_msg = concat(p_msg, 'Vacina não informada.<br />');
+  END IF;
+  IF p_anv_dat_programacao IS NULL THEN
+    SET p_msg = concat(p_msg, 'Data não informada.<br />');
+  END IF;
+
+  IF p_msg = '' THEN
+
+    START TRANSACTION;
+
+    UPDATE animal_vacina
+    SET ani_int_codigo = p_ani_int_codigo,
+        vac_int_codigo = p_vac_int_codigo,
+        anv_dat_programacao = p_anv_dat_programacao
+    WHERE anv_int_codigo = p_anv_int_codigo;
+
+    COMMIT;
+
+    SET p_status = TRUE;
+    SET p_msg = 'Um novo registro foi inserido com sucesso.';
+
+  END IF;
+
+END
+$$
+
 --
 -- Definition for procedure sp_animalvacina_del
 --
@@ -910,7 +1022,7 @@ CREATE OR REPLACE
 VIEW vw_animal_vacina
 AS
   select `animal_vacina`.`anv_int_codigo` AS `anv_int_codigo`,`animal_vacina`.`ani_int_codigo` AS `ani_int_codigo`,`animal`.`ani_var_nome` AS `ani_var_nome`,`animal_vacina`.`vac_int_codigo` AS `vac_int_codigo`,`vacina`.`vac_var_nome` AS `vac_var_nome`,`animal_vacina`.`anv_dat_programacao` AS `anv_dat_programacao`,date_format(`animal_vacina`.`anv_dat_programacao`,'%d/%m/%Y') AS `anv_dtf_programacao`,`animal_vacina`.`anv_dti_aplicacao` AS `anv_dti_aplicacao`,date_format(`animal_vacina`.`anv_dti_aplicacao`,'%d/%m/%Y  %H:%i:%s') AS `anv_dtf_aplicacao`,  
-  `animal_vacina`.`usu_int_codigo` AS `usu_int_codigo`,`usuario`.`usu_var_nome` AS `usu_var_nome` from `animal_vacina` inner join `animal` on `animal_vacina`.`ani_int_codigo` = `animal`.`ani_int_codigo` inner join `vacina` on `animal_vacina`.`vac_int_codigo` = `vacina`.`vac_int_codigo` inner join `usuario` on `animal_vacina`.`usu_int_codigo` = `usuario`.`usu_int_codigo`;
+  `animal_vacina`.`usu_int_codigo` AS `usu_int_codigo`,`usuario`.`usu_var_nome` AS `usu_var_nome` from `animal_vacina` inner join `animal` on `animal_vacina`.`ani_int_codigo` = `animal`.`ani_int_codigo` inner join `vacina` on `animal_vacina`.`vac_int_codigo` = `vacina`.`vac_int_codigo` left join `usuario` on `animal_vacina`.`usu_int_codigo` = `usuario`.`usu_int_codigo`;
 
 
 --
