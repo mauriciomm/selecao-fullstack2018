@@ -29,13 +29,9 @@ $app->post('/animais_vacinas', function (Request $request, Response $response) {
     $vacina = new Vacina();
     $vacina->setVac_int_codigo($body['vac_int_codigo']);
 
-    $usuario = new Usuario();
-    $usuario->setUsu_int_codigo($body['usu_int_codigo']);
-
     $animal_vacina->setAnimal($animal);
     $animal_vacina->setVacina($vacina);
     $animal_vacina->setAnv_dat_programacao($body['anv_dat_programacao']);
-    $animal_vacina->setUsuario($usuario);
 
     $data = AnimalVacinaDao::insert($animal_vacina);
     $code = ($data['status']) ? 201 : 500;
@@ -56,16 +52,35 @@ $app->put('/animais_vacinas/{anv_int_codigo}', function (Request $request, Respo
     $vacina = new Vacina();
     $vacina->setVac_int_codigo($body['vac_int_codigo']);
 
+    $animal_vacina->setAnv_int_codigo($anv_int_codigo);
+    $animal_vacina->setAnimal($animal);
+    $animal_vacina->setVacina($vacina);
+    $animal_vacina->setAnv_dat_programacao($body['anv_dat_programacao']);
+
+    $data = AnimalVacinaDao::update($animal_vacina);
+    $code = ($data['status']) ? 200 : 500;
+
+	return $response->withJson($data, $code);
+});
+
+$app->put('/animais_vacinas/{anv_int_codigo}/vacinar', function (Request $request, Response $response) {
+    $body = $request->getParsedBody();
+
+	$anv_int_codigo = $request->getAttribute('anv_int_codigo');
+    
+    $animal_vacina = new AnimalVacina();
+
+    $animal = new Animal();
+    $animal->setAni_int_codigo($body['ani_int_codigo']);
+
     $usuario = new Usuario();
     $usuario->setUsu_int_codigo($body['usu_int_codigo']);
 
     $animal_vacina->setAnv_int_codigo($anv_int_codigo);
     $animal_vacina->setAnimal($animal);
-    $animal_vacina->setVacina($vacina);
-    $animal_vacina->setAnv_dat_programacao($body['anv_dat_programacao']);
  	$animal_vacina->setUsuario($usuario);
 
-    $data = AnimalVacinaDao::update($animal_vacina);
+    $data = AnimalVacinaDao::vacinar($animal_vacina);
     $code = ($data['status']) ? 200 : 500;
 
 	return $response->withJson($data, $code);
