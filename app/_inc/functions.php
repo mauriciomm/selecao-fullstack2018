@@ -71,6 +71,19 @@ function getBotaoAdicionarProgramacaoVacina($id = 'p__btn_adicionar') {
     return $form->addButton($id, '<i class="fa fa-plus"></i> <span class="hidden-phone">Adicionar Programação de Vacina</span>', array('class' => 'btn sepH_a sepV_a blue-steel pull-left'));
 }
 
+function getBotaoLogin() {
+    $form = new GForm();
+    $retorno = $form->addButton('f__btn_login', '<i class="fa fa-sign-in"></i> Login', array('class' => 'btn blue pull-left sepV_b'), 'submit'); 
+    $retorno .= $form->addButton('f__btn_cadastro', '<i class="fa fa-user-plus"></i> Cadastre-se', array('class' => 'btn pull-left sepV_b')); 
+    return $retorno;
+}
+
+function getBotaoCadastrar() {
+    $form = new GForm();
+    $retorno = $form->addButton('f__btn_login', '<i class="fa fa-user-plus"></i> Cadastrar', array('class' => 'btn blue pull-left sepV_b'), 'submit');
+    return $retorno;
+}
+
 
 function validaCPF($cpf) {
     // Verifiva se o número digitado contém todos os digitos

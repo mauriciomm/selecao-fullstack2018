@@ -30,7 +30,7 @@ define('SYS_VERSION', '1.0');
 define('SYS_THEME', 'metronic4');
 define('SYS_LIB_DEFAULT', 'jquery,genesis,php.js');
 define('SYS_CHARSET', 'utf-8');
-define('SYS_COPYRIGHT', "2016 &copy; SimplesVet");
+define('SYS_COPYRIGHT', "2018 &copy; SimplesVet");
 
 //Constantes URL
 define('URL_STATIC', URL_SYS);

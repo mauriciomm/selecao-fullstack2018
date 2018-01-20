@@ -7,7 +7,6 @@ $tools = '<a id="f__btn_voltar"><i class="fa fa-arrow-left font-blue-steel"></i>
 $htmlForm .= getWidgetHeader($title, $tools);
 //</editor-fold>
 //<editor-fold desc="Formulário">
-$htmlForm .= $form->open('form', 'form-vertical form');
 $htmlForm .= $form->addInput('hidden', 'acao', false, array('value' => 'ins', 'class' => 'acao'), false, false, false);
 $htmlForm .= $form->addInput('hidden', 'ani_int_codigo', false, array('value' => ''), false, false, false);
 $htmlForm .= $form->addInput('text', 'ani_var_nome', 'Nome*', array('maxlength' => '50', 'validate' => 'required'));

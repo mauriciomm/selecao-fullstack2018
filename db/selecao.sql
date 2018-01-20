@@ -67,6 +67,7 @@ CREATE TABLE usuario (
   usu_int_codigo INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código',
   usu_var_nome VARCHAR(50) NOT NULL COMMENT 'Nome',
   usu_var_email VARCHAR(100) NOT NULL COMMENT 'Email',
+  usu_var_senha VARCHAR(32) NOT NULL COMMENT 'Senha',
   usu_cha_status CHAR(1) NOT NULL DEFAULT 'A' COMMENT 'Status|A:Ativo;I:Inativo',
   usu_dti_inclusao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Inclusão',
   PRIMARY KEY (usu_int_codigo),
@@ -989,7 +990,7 @@ CREATE OR REPLACE
   SQL SECURITY INVOKER
 VIEW vw_usuario
 AS
-  select `usuario`.`usu_int_codigo` AS `usu_int_codigo`,`usuario`.`usu_var_nome` AS `usu_var_nome`,`usuario`.`usu_var_email` AS `usu_var_email`,`usuario`.`usu_cha_status` AS `usu_cha_status`,(case `usuario`.`usu_cha_status` when 'A' then 'Ativo' when 'I' then 'Inativo' end) AS `usu_var_status`,`usuario`.`usu_dti_inclusao` AS `usu_dti_inclusao`,date_format(`usuario`.`usu_dti_inclusao`,'%d/%m/%Y %H:%i:%s') AS `usu_dtf_inclusao` from `usuario`;
+  select `usuario`.`usu_int_codigo` AS `usu_int_codigo`,`usuario`.`usu_var_nome` AS `usu_var_nome`,`usuario`.`usu_var_email` AS `usu_var_email`, `usuario`.`usu_var_senha` AS `usu_var_senha`,`usuario`.`usu_cha_status` AS `usu_cha_status`,(case `usuario`.`usu_cha_status` when 'A' then 'Ativo' when 'I' then 'Inativo' end) AS `usu_var_status`,`usuario`.`usu_dti_inclusao` AS `usu_dti_inclusao`,date_format(`usuario`.`usu_dti_inclusao`,'%d/%m/%Y %H:%i:%s') AS `usu_dtf_inclusao` from `usuario`;
 
 --
 -- Definition for view vw_vacina

@@ -5,6 +5,7 @@ class Usuario{
 	private $usu_int_codigo;
 	private $usu_var_nome;
 	private $usu_var_email;
+	private $usu_var_senha;
 	private $usu_cha_status;
 	private $usu_dti_inclusao;
 
@@ -30,6 +31,14 @@ class Usuario{
 
 	public function setUsu_var_email($usu_var_email) {
 		$this->usu_var_email = $usu_var_email;
+	}
+
+	public function getUsu_var_senha() {
+		return $this->usu_var_senha;
+	}
+
+	public function setUsu_var_senha($usu_var_senha) {
+		$this->usu_var_senha = $usu_var_senha;
 	}
 
 	public function getUsu_cha_status() {

@@ -19,7 +19,7 @@ class GHeader extends GHeaderParent {
      * @param string $currentMenu default: '' caminho completo para a página
      * @param string $breadcrumb default: ''
      */
-    function show($isIframe = false, $currentMenu = '', $breadcrumb = '') {
+    function show($isIframe = false, $currentMenu = '', $breadcrumb = '', $showMenu = true) {
         parent::show();
 
         $html = '';
@@ -58,18 +58,20 @@ class GHeader extends GHeaderParent {
 
             $html .= '</div>'; //.container
             $html .= '</div>'; //.page-header-top
-
-            $html .= '<div class="page-header-menu">';
-            $html .= '<div class="container">';
-
-            $html .= '<div class="hor-menu">';
-            $html .= $this->getMenu($currentMenu);
-            $html .= '</div>';
-
-            $html .= '</div>'; //.container
-            $html .= '</div>'; //.page-header-menu
-            $html .= '</div>';
-
+            
+            if ($showMenu) {
+                $html .= '<div class="page-header-menu">';
+                $html .= '<div class="container">';
+                
+                $html .= '<div class="hor-menu">';
+                $html .= $this->getMenu($currentMenu);
+                $html .= '</div>';
+                
+                $html .= '</div>'; //.container
+                $html .= '</div>'; //.page-header-menu
+                $html .= '</div>';
+            }
+                
             $html .= '<div class="page-container">';
 
             $html .= '<div class="page-head">';

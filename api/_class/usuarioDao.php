@@ -81,4 +81,20 @@ class UsuarioDao {
         }
         return $return;
     }
+
+    /** @param Usuario $usuario */
+    public static function validaUsuario($usuario) {
+        $ret = array();
+        try {
+            $mysql = new GDbMysql();
+            $mysql->execute("SELECT count(usu_int_codigo) FROM vw_usuario WHERE usu_var_email = ? and usu_var_senha = MD5(?)", array("ss", $usuario->getUsu_var_email(), $usuario->getUsu_var_senha()), true, 'MYSQL_ASSOC');
+            if ($mysql->fetch()) {
+                $ret = $mysql->res;
+            }
+            $mysql->close();
+        } catch (GDbException $e) {
+            echo $e->getError();
+        }
+        return $ret;
+    }
 }

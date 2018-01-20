@@ -57,3 +57,16 @@ $app->delete('/usuarios/{usu_int_codigo}', function (Request $request, Response 
 
 	return $response->withJson($data, $code);
 });
+
+$app->post('/usuario/login', function (Request $request, Response $response) {
+    $body = $request->getParsedBody();
+    
+    $usuario = new Usuario();
+    $usuario->setUsu_var_email($body['usu_var_email']);
+    $usuario->setUsu_var_senha($body['usu_var_senha']);
+
+    $data = UsuarioDao::validaUsuario($usuario);
+    $code = count($data) > 0 ? 200 : 404;
+
+	return $response->withJson($data, $code);
+});
