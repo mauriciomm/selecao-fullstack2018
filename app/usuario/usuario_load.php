@@ -37,7 +37,7 @@ try {
         $filter->setOrder(array('usu_var_nome' => 'ASC'));
         $filter->setLimit($start, $rp);
 
-        $query = "SELECT usu_int_codigo, usu_var_nome, usu_var_email, usu_cha_status FROM usuario " . $filter->getWhere();
+        $query = "SELECT usu_int_codigo, usu_var_nome, usu_var_email, usu_cha_status FROM vw_usuario " . $filter->getWhere();
         $param = $filter->getParam();
 
         $mysql->execute($query, $param);
@@ -58,7 +58,7 @@ try {
                 $html .= '<tr id="' . $mysql->res['usu_int_codigo'] . '" class="linhaRegistro ' . $class . '">';
                 $html .= '<td>' . $mysql->res['usu_var_nome'] . '</td>';
                 $html .= '<td>' . $mysql->res['usu_var_email'] . '</td>';
-                $html .= '<td>' . $mysql->res['usu_var_status'] . '</td>';
+                $html .= '<td>' . $mysql->res['usu_cha_status'] . '</td>';
                 //<editor-fold desc="Actions">
                     $html .= '<td class="__acenter hidden-phone acoes">';
                     $html .= $form->addButton('l__btn_editar', '<i class="fa fa-pencil"></i>', array('class' => 'btn btn-small btn-icon-only l__btn_editar', 'title' => 'Edit'));
