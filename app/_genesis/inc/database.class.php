@@ -10,7 +10,7 @@ class GDbMysql {
      * Criar um conexão com o banco mysql e setar a Time Zone
      *
      */
-    function __construct() {
+    public function __construct() {
         // carrega a conexao com mysql
         try {
             $this->connect();
