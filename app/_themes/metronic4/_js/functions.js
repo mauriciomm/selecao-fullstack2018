@@ -78,7 +78,8 @@ function loadForm(pag, callback) {
             $.gDisplay.loadStart('html');
         },
         error: function(json) {
-            var msg = (json.responseJSON.message == undefined) ? "Error loading page..." : json.responseJSON.message;
+            console.log(json);
+            var msg = (json.responseJSON.msg == undefined) ? "Error loading page..." : json.responseJSON.msg;
             $.gDisplay.loadError('html', msg);
         },
         success: function(json) {
