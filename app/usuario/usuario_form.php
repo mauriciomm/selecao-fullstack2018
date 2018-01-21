@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: http://selecao-api.herokuapp.com/*");
 $form = new GForm();
 
 //<editor-fold desc="Header">
