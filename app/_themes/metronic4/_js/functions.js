@@ -73,7 +73,6 @@ function loadForm(pag, callback) {
         type: "GET",
         url: pag,
         dataType: 'json',
-        crossDomain: true,
         async: false,
         beforeSend: function() {
             $.gDisplay.loadStart('html');
