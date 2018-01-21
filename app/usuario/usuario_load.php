@@ -25,7 +25,7 @@ if (!empty($usu_var_nome)) {
 
 try {
     if ($type == 'C') {
-        $query = "SELECT count(1) FROM vw_usuario " . $filter->getWhere();
+        $query = "SELECT count(1) FROM usuario " . $filter->getWhere();
         $param = $filter->getParam();
         $mysql->execute($query, $param);
         if ($mysql->fetch()) {
@@ -37,7 +37,7 @@ try {
         $filter->setOrder(array('usu_var_nome' => 'ASC'));
         $filter->setLimit($start, $rp);
 
-        $query = "SELECT usu_int_codigo, usu_var_nome, usu_var_email, usu_var_status FROM vw_usuario " . $filter->getWhere();
+        $query = "SELECT usu_int_codigo, usu_var_nome, usu_var_email, usu_var_status FROM usuario " . $filter->getWhere();
         $param = $filter->getParam();
 
         $mysql->execute($query, $param);
