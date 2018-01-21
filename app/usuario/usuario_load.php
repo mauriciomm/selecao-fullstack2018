@@ -37,10 +37,10 @@ try {
         $filter->setOrder(array('usu_var_nome' => 'ASC'));
         $filter->setLimit($start, $rp);
 
-        $query = "SELECT usu_int_codigo, usu_var_nome, usu_var_email, usu_cha_status FROM vw_usuario";
+        $query = "SELECT usu_int_codigo, usu_var_nome, usu_var_email, usu_var_status FROM vw_usuario";
         $param = "";
 
-        $mysql->execute($query, $param);
+        $mysql->execute($query, $param, true);
 
         if ($mysql->numRows() > 0) {
             $html .= '<table class="table table-striped table-hover">';
