@@ -1,6 +1,5 @@
 <?php
 require_once '../_inc/global.php';
-header("Access-Control-Allow-Origin: http://selecao-api.herokuapp.com/*");
 
 $form = new GForm();
 

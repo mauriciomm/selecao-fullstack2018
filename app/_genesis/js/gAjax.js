@@ -29,7 +29,8 @@
                 type: method,
                 url: page,
                 data: param,
-                dataType: 'json',
+                dataType: 'jsonp',
+                crossDomain: true,
                 async: async,
                 beforeSend: function() {
                     if (preloader === undefined || preloader === true)
