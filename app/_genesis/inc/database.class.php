@@ -26,7 +26,7 @@ class GDbMysql {
      *
      */
     private function connect() {
-        $this->link = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE, MYSQL_PORT);
+        $this->link = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
         if (!$this->link) {
             throw new GDbException(mysqli_error($this->link), mysqli_errno($this->link));
         }
