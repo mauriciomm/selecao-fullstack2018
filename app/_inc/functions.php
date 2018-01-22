@@ -68,7 +68,7 @@ function getBotaoAdicionar($id = 'p__btn_adicionar') {
 
 function getBotaoAdicionarProgramacaoVacina($id = 'p__btn_adicionar') {
     $form = new GForm();
-    return $form->addButton($id, '<i class="fa fa-plus"></i> <span class="hidden-phone">Adicionar Programação de Vacina</span>', array('class' => 'btn sepH_a sepV_a blue-steel pull-left'));
+    return $form->addButton($id, '<i class="fa fa-plus"></i> <span class="hidden-phone">Programar Vacina</span>', array('class' => 'btn sepH_a sepV_a blue-steel pull-left'));
 }
 
 
