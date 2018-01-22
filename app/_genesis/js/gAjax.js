@@ -37,6 +37,7 @@
                 },
                 error: function(json) {
                     console.log(json);
+                    console.log("ERROR");
                     var msg = "Error loading page...";
                     if(json.responseJSON !== undefined){
                         msg = json.responseJSON.msg;
