@@ -9,7 +9,7 @@
                     jQuery.gDisplay.loadStart(target);
                 },
                 error: function() {
-                    jQuery.gDisplay.loadError(target, "Error loading page...");
+                    jQuery.gDisplay.loadError(target, "Erro ao carregar página...");
                 },
                 success: function(resp) {
                     jQuery.gDisplay.loadStop(target);
@@ -75,7 +75,7 @@
                 },
                 error: function() {
                     if (preloader === undefined || preloader === true)
-                        jQuery.gDisplay.loadError('html', "Erro ao carregar página...");
+                        jQuery.gDisplay.loadError('html', "Error loading page...");
                 },
                 success: function(json) {
                     if (preloader === undefined || preloader === true)
