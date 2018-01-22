@@ -36,7 +36,7 @@
                         jQuery.gDisplay.loadStart('html');
                 },
                 error: function(json) {
-                    var msg = "Erro ao carregar página...";
+                    var msg = "Error loading page...";
                     if(json.responseJSON !== undefined){
                         msg = json.responseJSON.msg;
                     }
@@ -75,7 +75,7 @@
                 },
                 error: function() {
                     if (preloader === undefined || preloader === true)
-                        jQuery.gDisplay.loadError('html', "Error loading page...");
+                        jQuery.gDisplay.loadError('html', "Erro ao carregar página...");
                 },
                 success: function(json) {
                     if (preloader === undefined || preloader === true)
