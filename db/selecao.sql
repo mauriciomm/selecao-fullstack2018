@@ -27,17 +27,59 @@ SET NAMES 'utf8';
 --
 CREATE DATABASE selecao_fullstack
   CHARACTER SET utf8
-  COLLATE utf8_general_ci;
+  COLLATE utf8_unicode_ci;
 
 --
 -- Set default database
 --
 USE selecao_fullstack;
 
+
+--
+-- Definition for table raça_animal
+--
+
+DROP TABLE IF EXISTS animal_vacina;
+DROP TABLE IF EXISTS animal;
+DROP TABLE IF EXISTS vacina;
+DROP TABLE IF EXISTS usuario;
+DROP TABLE IF EXISTS proprietario;
+DROP TABLE IF EXISTS raca_animal;
+
+CREATE TABLE raca_animal (
+  ran_int_codigo INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código',
+  ran_var_nome VARCHAR(50) NOT NULL COMMENT 'Nome',
+  ran_dti_inclusao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Inclusão',
+  PRIMARY KEY (ran_int_codigo)
+)
+ENGINE = INNODB
+AUTO_INCREMENT = 1
+AVG_ROW_LENGTH = 5461
+CHARACTER SET utf8
+COLLATE utf8_unicode_ci
+COMMENT = 'Raça de Animal';
+
+--
+-- Definition for table proprietario
+--
+CREATE TABLE proprietario (
+  pro_int_codigo INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código',
+  pro_var_nome VARCHAR(50) NOT NULL COMMENT 'Nome',
+  pro_var_email VARCHAR(100) NOT NULL COMMENT 'Email',
+  pro_var_telefone VARCHAR(14) NOT NULL COMMENT 'Telefone',
+  pro_dti_inclusao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Inclusão',
+  PRIMARY KEY (pro_int_codigo)
+)
+ENGINE = INNODB
+AUTO_INCREMENT = 1
+AVG_ROW_LENGTH = 5461
+CHARACTER SET utf8
+COLLATE utf8_unicode_ci
+COMMENT = 'Proprietário';
+
 --
 -- Definition for table animal
 --
-DROP TABLE IF EXISTS animal;
 CREATE TABLE animal (
   ani_int_codigo INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código',
   ran_int_codigo INT(11) UNSIGNED NULL COMMENT 'Raça',
@@ -56,13 +98,12 @@ ENGINE = INNODB
 AUTO_INCREMENT = 1
 AVG_ROW_LENGTH = 8192
 CHARACTER SET utf8
-COLLATE utf8_general_ci
+COLLATE utf8_unicode_ci
 COMMENT = 'Animal';
 
 --
 -- Definition for table usuario
 --
-DROP TABLE IF EXISTS usuario;
 CREATE TABLE usuario (
   usu_int_codigo INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código',
   usu_var_nome VARCHAR(50) NOT NULL COMMENT 'Nome',
@@ -78,13 +119,12 @@ ENGINE = INNODB
 AUTO_INCREMENT = 1
 AVG_ROW_LENGTH = 16384
 CHARACTER SET utf8
-COLLATE utf8_general_ci
+COLLATE utf8_unicode_ci
 COMMENT = 'Usuario';
 
 --
 -- Definition for table vacina
 --
-DROP TABLE IF EXISTS vacina;
 CREATE TABLE vacina (
   vac_int_codigo INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código',
   vac_var_nome VARCHAR(50) NOT NULL COMMENT 'Nome',
@@ -95,13 +135,12 @@ ENGINE = INNODB
 AUTO_INCREMENT = 1
 AVG_ROW_LENGTH = 5461
 CHARACTER SET utf8
-COLLATE utf8_general_ci
+COLLATE utf8_unicode_ci
 COMMENT = 'Vacina';
 
 --
 -- Definition for table animal_vacina
 --
-DROP TABLE IF EXISTS animal_vacina;
 CREATE TABLE animal_vacina (
   anv_int_codigo INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Codigo',
   ani_int_codigo INT(11) UNSIGNED NOT NULL COMMENT 'Animal',
@@ -122,44 +161,9 @@ ENGINE = INNODB
 AUTO_INCREMENT = 1
 AVG_ROW_LENGTH = 16384
 CHARACTER SET utf8
-COLLATE utf8_general_ci
+COLLATE utf8_unicode_ci
 COMMENT = 'AnimalVacina||Agenda de Vacinação';
 
---
--- Definition for table raça_animal
---
-DROP TABLE IF EXISTS raca_animal;
-CREATE TABLE raca_animal (
-  ran_int_codigo INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código',
-  ran_var_nome VARCHAR(50) NOT NULL COMMENT 'Nome',
-  ran_dti_inclusao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Inclusão',
-  PRIMARY KEY (ran_int_codigo)
-)
-ENGINE = INNODB
-AUTO_INCREMENT = 1
-AVG_ROW_LENGTH = 5461
-CHARACTER SET utf8
-COLLATE utf8_general_ci
-COMMENT = 'Raça de Animal';
-
---
--- Definition for table proprietario
---
-DROP TABLE IF EXISTS proprietario;
-CREATE TABLE proprietario (
-  pro_int_codigo INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código',
-  pro_var_nome VARCHAR(50) NOT NULL COMMENT 'Nome',
-  pro_var_email VARCHAR(100) NOT NULL COMMENT 'Email',
-  pro_var_telefone VARCHAR(14) NOT NULL COMMENT 'Telefone',
-  pro_dti_inclusao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Inclusão',
-  PRIMARY KEY (pro_int_codigo)
-)
-ENGINE = INNODB
-AUTO_INCREMENT = 1
-AVG_ROW_LENGTH = 5461
-CHARACTER SET utf8
-COLLATE utf8_general_ci
-COMMENT = 'Proprietário';
 
 DELIMITER $$
 
