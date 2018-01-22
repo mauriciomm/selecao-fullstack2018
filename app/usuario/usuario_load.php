@@ -22,7 +22,6 @@ if (!empty($usu_var_nome)) {
 }
 
 //-------------------------------- Filtros -----------------------------------//
-
 try {
     if ($type == 'C') {
         $query = "SELECT count(1) FROM usuario " . $filter->getWhere();
