@@ -79,7 +79,7 @@ function loadForm(pag, callback) {
         },
         error: function(json) {
             console.log(json);
-            var msg = (json.responseJSON.msg == undefined) ? "Error loading page..." : json.responseJSON.msg;
+            var msg = (json.responseJSON.msg == undefined) ? "Erro ao carregar página..." : json.responseJSON.msg;
             $.gDisplay.loadError('html', msg);
         },
         success: function(json) {
