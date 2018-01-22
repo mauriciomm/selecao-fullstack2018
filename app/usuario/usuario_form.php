@@ -32,7 +32,10 @@ echo $htmlForm;
             if ($('#form').gValidate()) {
                 var method = ($('#acao').val() == 'ins') ? 'POST' : 'PUT';
                 var endpoint = ($('#acao').val() == 'ins') ? URL_API + 'usuarios' : URL_API + 'usuarios/' + usu_int_codigo;
+                console.log(method);
+                console.log(endpoint);
                 $.gAjax.exec(method, endpoint, $('#form').serializeArray(), false, function(json) {
+                    console.log(json);
                     if (json.status) {
                         showList(true);
                     }
